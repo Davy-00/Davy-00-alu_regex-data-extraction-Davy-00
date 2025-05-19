@@ -31,6 +31,21 @@
     .invalid {
       color: red;
     }
+    #validateExtractBtn {
+      margin-top: 1rem;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      font-weight: bold;
+      color: white;
+      background-color: #007bff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    #validateExtractBtn:hover {
+      background-color: #0056b3;
+    }
   </style>
 </head>
 <body>
@@ -52,62 +67,8 @@
     <input type="text" id="creditCard" name="creditCard" placeholder="1234 5678 9012 3456" />
     <div id="creditCardResult" class="result"></div>
   </form>
+  <button id="validateExtractBtn" type="button">Validate and Extract</button>
 
-  <script>
-    function validateEmail(email) {
-      const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-      return regex.test(email);
-    }
-
-    function validateURL(url) {
-      const regex = /^(https?:\/\/)([\w-]+\.)+[\w-]+(\/[\w-./?%&=]*)?$/i;
-      return regex.test(url);
-    }
-
-    function validatePhoneNumber(phone) {
-      const regex = /^(\(\d{3}\)\s?|\d{3}[-.]?)\d{3}[-.]?\d{4}$/;
-      return regex.test(phone);
-    }
-
-    function validateCreditCard(card) {
-      const regex = /^(\d{4}[- ]?){3}\d{4}$/;
-      return regex.test(card);
-    }
-
-    const emailInput = document.getElementById('email');
-    const urlInput = document.getElementById('url');
-    const phoneInput = document.getElementById('phone');
-    const creditCardInput = document.getElementById('creditCard');
-
-    const emailResult = document.getElementById('emailResult');
-    const urlResult = document.getElementById('urlResult');
-    const phoneResult = document.getElementById('phoneResult');
-    const creditCardResult = document.getElementById('creditCardResult');
-
-    function updateResult(element, isValid) {
-      if (element.value.trim() === '') {
-        element.nextElementSibling.textContent = '';
-        return;
-      }
-      element.nextElementSibling.textContent = isValid ? 'Valid' : 'Invalid';
-      element.nextElementSibling.className = isValid ? 'result valid' : 'result invalid';
-    }
-
-    emailInput.addEventListener('input', () => {
-      updateResult(emailInput, validateEmail(emailInput.value));
-    });
-
-    urlInput.addEventListener('input', () => {
-      updateResult(urlInput, validateURL(urlInput.value));
-    });
-
-    phoneInput.addEventListener('input', () => {
-      updateResult(phoneInput, validatePhoneNumber(phoneInput.value));
-    });
-
-    creditCardInput.addEventListener('input', () => {
-      updateResult(creditCardInput, validateCreditCard(creditCardInput.value));
-    });
-  </script>
+  <script src="regexValidators.js"></script>
 </body>
 </html>

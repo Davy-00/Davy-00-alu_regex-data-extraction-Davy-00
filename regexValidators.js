@@ -54,3 +54,40 @@ module.exports = {
   validatePhoneNumber,
   validateCreditCard,
 };
+
+if (typeof window !== 'undefined') {
+  window.addEventListener('DOMContentLoaded', () => {
+    const emailInput = document.getElementById('email');
+    const urlInput = document.getElementById('url');
+    const phoneInput = document.getElementById('phone');
+    const creditCardInput = document.getElementById('creditCard');
+
+    const emailResult = document.getElementById('emailResult');
+    const urlResult = document.getElementById('urlResult');
+    const phoneResult = document.getElementById('phoneResult');
+    const creditCardResult = document.getElementById('creditCardResult');
+
+    function updateResult(element, isValid) {
+      const value = element.value.trim();
+      if (value === '') {
+        element.nextElementSibling.textContent = 'Input is empty';
+        element.nextElementSibling.className = 'result invalid';
+        return;
+      }
+      if (value.length > 100) {
+        element.nextElementSibling.textContent = 'Input too long';
+        element.nextElementSibling.className = 'result invalid';
+        return;
+      }
+      element.nextElementSibling.textContent = isValid ? 'Valid' : 'Invalid';
+      element.nextElementSibling.className = isValid ? 'result valid' : 'result invalid';
+    }
+
+    document.getElementById('validateExtractBtn').addEventListener('click', () => {
+      updateResult(emailInput, validateEmail(emailInput.value));
+      updateResult(urlInput, validateURL(urlInput.value));
+      updateResult(phoneInput, validatePhoneNumber(phoneInput.value));
+      updateResult(creditCardInput, validateCreditCard(creditCardInput.value));
+    });
+  });
+}

@@ -13,21 +13,12 @@ This project implements regular expression validations for extracting specific d
 
 The `regexValidators.js` file exports functions to validate each data type.
 
-Example:
-
-```js
-const { validateEmail, validateURL, validatePhoneNumber, validateCreditCard } = require('./regexValidators');
-
-console.log(validateEmail('user@example.com')); // true
-console.log(validateURL('https://www.example.com')); // true
-console.log(validatePhoneNumber('(123) 456-7890')); // true
-console.log(validateCreditCard('1234 5678 9012 3456')); // true
-```
-
 ## How to Run
 
 1. Clone the repository.
 2. Run `node regexValidators.js` to test the validations.
+3. Open `index.html` in a web browser to use the web interface for validation and extraction.
+
 
 ## License
 
