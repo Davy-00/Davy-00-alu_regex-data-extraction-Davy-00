@@ -1,5 +1,3 @@
-// Regex Validators for Data Extraction
-
 // Validate Email Address
 function validateEmail(email) {
   const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -24,36 +22,29 @@ function validateCreditCard(card) {
   return regex.test(card);
 }
 
-// Example usage
-if (require.main === module) {
-  console.log('Email Tests:');
-  console.log(validateEmail('user@example.com')); // true
-  console.log(validateEmail('firstname.lastname@company.co.uk')); // true
-  console.log(validateEmail('invalid-email@com')); // false
-
-  console.log('\nURL Tests:');
-  console.log(validateURL('https://www.example.com')); // true
-  console.log(validateURL('https://subdomain.example.org/page')); // true
-  console.log(validateURL('ftp://example.com')); // false
-
-  console.log('\nPhone Number Tests:');
-  console.log(validatePhoneNumber('(123) 456-7890')); // true
-  console.log(validatePhoneNumber('123-456-7890')); // true
-  console.log(validatePhoneNumber('123.456.7890')); // true
-  console.log(validatePhoneNumber('1234567890')); // false
-
-  console.log('\nCredit Card Tests:');
-  console.log(validateCreditCard('1234 5678 9012 3456')); // true
-  console.log(validateCreditCard('1234-5678-9012-3456')); // true
-  console.log(validateCreditCard('1234567890123456')); // false
+// Extract Email Addresses
+function extractEmails(text) {
+  const regex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g;
+  return text.match(regex) || [];
 }
 
-module.exports = {
-  validateEmail,
-  validateURL,
-  validatePhoneNumber,
-  validateCreditCard,
-};
+// Extract URLs
+function extractURLs(text) {
+  const regex = /(https?:\/\/[\w-]+\.[\w.-]+[^\s]*)/g;
+  return text.match(regex) || [];
+}
+
+// Extract Phone Numbers
+function extractPhoneNumbers(text) {
+  const regex = /(\(\d{3}\)\s?|\d{3}[-.]?)\d{3}[-.]?\d{4}/g;
+  return text.match(regex) || [];
+}
+
+// Extract Credit Card Numbers
+function extractCreditCards(text) {
+  const regex = /(\d{4}[- ]?){3}\d{4}/g;
+  return text.match(regex) || [];
+}
 
 if (typeof window !== 'undefined') {
   window.addEventListener('DOMContentLoaded', () => {
@@ -88,6 +79,26 @@ if (typeof window !== 'undefined') {
       updateResult(urlInput, validateURL(urlInput.value));
       updateResult(phoneInput, validatePhoneNumber(phoneInput.value));
       updateResult(creditCardInput, validateCreditCard(creditCardInput.value));
+
+      // Combined output
+      const outputContent = document.getElementById('outputContent');
+
+      // const emailValidation = validateEmail(emailInput.value) ? 'Valid' : 'Invalid';
+      // const urlValidation = validateURL(urlInput.value) ? 'Valid' : 'Invalid';
+      // const phoneValidation = validatePhoneNumber(phoneInput.value) ? 'Valid' : 'Invalid';
+      // const creditCardValidation = validateCreditCard(creditCardInput.value) ? 'Valid' : 'Invalid';
+
+      const emailExtraction = extractEmails(emailInput.value).join(', ') || 'No emails found';
+      const urlExtraction = extractURLs(urlInput.value).join(', ') || 'No URLs found';
+      const phoneExtraction = extractPhoneNumbers(phoneInput.value).join(', ') || 'No phone numbers found';
+      const creditCardExtraction = extractCreditCards(creditCardInput.value).join(', ') || 'No credit card numbers found';
+
+      outputContent.innerHTML = `
+        <p><strong>Email:</strong> ${emailExtraction}</p>
+        <p><strong>URL:</strong> ${urlExtraction}</p>
+        <p><strong>Phone Number:</strong> ${phoneExtraction}</p>
+        <p><strong>Credit Card:</strong> ${creditCardExtraction}</p>
+      `;
     });
   });
 }
