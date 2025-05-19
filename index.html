@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Regex Validators Demo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2rem;
+      max-width: 600px;
+    }
+    label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+    input {
+      width: 100%;
+      padding: 0.5rem;
+      margin-top: 0.25rem;
+      box-sizing: border-box;
+    }
+    .result {
+      margin-top: 0.25rem;
+      font-weight: bold;
+    }
+    .valid {
+      color: green;
+    }
+    .invalid {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <h1>Regex Validators Demo</h1>
+  <form id="validatorForm" novalidate>
+    <label for="email">Email Address:</label>
+    <input type="text" id="email" name="email" placeholder="user@example.com" />
+    <div id="emailResult" class="result"></div>
+
+    <label for="url">URL:</label>
+    <input type="text" id="url" name="url" placeholder="https://www.example.com" />
+    <div id="urlResult" class="result"></div>
+
+    <label for="phone">Phone Number:</label>
+    <input type="text" id="phone" name="phone" placeholder="(123) 456-7890" />
+    <div id="phoneResult" class="result"></div>
+
+    <label for="creditCard">Credit Card Number:</label>
+    <input type="text" id="creditCard" name="creditCard" placeholder="1234 5678 9012 3456" />
+    <div id="creditCardResult" class="result"></div>
+  </form>
+
+  <script>
+    function validateEmail(email) {
+      const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      return regex.test(email);
+    }
+
+    function validateURL(url) {
+      const regex = /^(https?:\/\/)([\w-]+\.)+[\w-]+(\/[\w-./?%&=]*)?$/i;
+      return regex.test(url);
+    }
+
+    function validatePhoneNumber(phone) {
+      const regex = /^(\(\d{3}\)\s?|\d{3}[-.]?)\d{3}[-.]?\d{4}$/;
+      return regex.test(phone);
+    }
+
+    function validateCreditCard(card) {
+      const regex = /^(\d{4}[- ]?){3}\d{4}$/;
+      return regex.test(card);
+    }
+
+    const emailInput = document.getElementById('email');
+    const urlInput = document.getElementById('url');
+    const phoneInput = document.getElementById('phone');
+    const creditCardInput = document.getElementById('creditCard');
+
+    const emailResult = document.getElementById('emailResult');
+    const urlResult = document.getElementById('urlResult');
+    const phoneResult = document.getElementById('phoneResult');
+    const creditCardResult = document.getElementById('creditCardResult');
+
+    function updateResult(element, isValid) {
+      if (element.value.trim() === '') {
+        element.nextElementSibling.textContent = '';
+        return;
+      }
+      element.nextElementSibling.textContent = isValid ? 'Valid' : 'Invalid';
+      element.nextElementSibling.className = isValid ? 'result valid' : 'result invalid';
+    }
+
+    emailInput.addEventListener('input', () => {
+      updateResult(emailInput, validateEmail(emailInput.value));
+    });
+
+    urlInput.addEventListener('input', () => {
+      updateResult(urlInput, validateURL(urlInput.value));
+    });
+
+    phoneInput.addEventListener('input', () => {
+      updateResult(phoneInput, validatePhoneNumber(phoneInput.value));
+    });
+
+    creditCardInput.addEventListener('input', () => {
+      updateResult(creditCardInput, validateCreditCard(creditCardInput.value));
+    });
+  </script>
+</body>
+</html>
