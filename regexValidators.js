@@ -79,15 +79,7 @@ if (typeof window !== 'undefined') {
       updateResult(urlInput, validateURL(urlInput.value));
       updateResult(phoneInput, validatePhoneNumber(phoneInput.value));
       updateResult(creditCardInput, validateCreditCard(creditCardInput.value));
-
-      // Combined output
       const outputContent = document.getElementById('outputContent');
-
-      // const emailValidation = validateEmail(emailInput.value) ? 'Valid' : 'Invalid';
-      // const urlValidation = validateURL(urlInput.value) ? 'Valid' : 'Invalid';
-      // const phoneValidation = validatePhoneNumber(phoneInput.value) ? 'Valid' : 'Invalid';
-      // const creditCardValidation = validateCreditCard(creditCardInput.value) ? 'Valid' : 'Invalid';
-
       const emailExtraction = extractEmails(emailInput.value).join(', ') || 'No emails found';
       const urlExtraction = extractURLs(urlInput.value).join(', ') || 'No URLs found';
       const phoneExtraction = extractPhoneNumbers(phoneInput.value).join(', ') || 'No phone numbers found';
